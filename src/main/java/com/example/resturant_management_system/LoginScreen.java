@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -25,9 +26,11 @@ public class LoginScreen extends Application {
 
         Label titleLabel = new Label("Restaurant Login");
 
+        //Email UI section
         Label emailLabel = new Label("Login: ");
         TextField emailField = new TextField();
 
+        //Password UI section
         Label passwordLabel = new Label("Password: ");
         TextField passwordField = new TextField();
 
@@ -35,6 +38,11 @@ public class LoginScreen extends Application {
         gridPane.add(emailField, 1, 0);
         gridPane.add(passwordLabel, 0, 4);
         gridPane.add(passwordField, 1, 4);
+
+        //Can use code like this to delete items in FoodOrder from the current order
+        emailLabel.setOnMouseClicked(e->{
+            emailLabel.setText("Clicked!");
+        });
 
 
         BorderPane root = new BorderPane();

@@ -38,7 +38,5 @@ public class FoodItem {
                 + "\n" + modifications;
 
         return result;
-        
-
     }
 }
