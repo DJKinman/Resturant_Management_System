@@ -3,11 +3,13 @@ package com.example.resturant_management_system;
 public class FoodItem {
     private String name;
     private double price;
+    private String menu;
     private String modifications;
 
-    FoodItem(String name, double price){
+    FoodItem(String name, double price, String menu){
         this.name = name;
         this.price = price;
+        this.menu = menu;
     }
 
     //adds a modification to the item
@@ -24,6 +26,11 @@ public class FoodItem {
     //returns the price of the item
     public double getPrice(){
         return price;
+    }
+
+    //returns what menu the FoodItem belongs to
+    public String getMenu(){
+        return menu;
     }
 
     //returns the modifications of the item

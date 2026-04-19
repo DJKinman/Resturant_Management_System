@@ -6,50 +6,16 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class UserList {
-    ArrayList<User> userList;
+public class UserList extends FileLists<User> {
 
     public UserList() {
-        userList = new ArrayList<>();
-    }
-
-    //Should run once at program exeucution
-    //retrieves user info from file
-    public void getUsersFromFile() throws FileNotFoundException {
-        Scanner readUserFile = new Scanner(new File("RegisteredUsers.txt"));
-
-         while (readUserFile.hasNext()){
-             //tells the scanner when to stop reading (includes all whitespace, commas, and dashes/minus signs)
-             readUserFile.useDelimiter("[\\s,-]+");
-
-             //parses date into separate variables to combine into date object
-             String userEmail = readUserFile.next();
-             String userPassword = readUserFile.next();
-
-             //creates new user based on info from file
-             userList.add(new User(userEmail, userPassword));
-         }
-
-         //gotta make sure to close the file
-         readUserFile.close();
-    }
-
-    //Updates user info file when a new user is registered
-    public void writeUsersToFile() throws FileNotFoundException {
-        PrintWriter writeOutput = new PrintWriter("RegisteredUsers.txt");
-
-        //prints each user in the file
-        for (User user : userList){
-            writeOutput.println(user);
-        }
-
-        writeOutput.close();
+        list = new ArrayList<>();
     }
 
     //Checks if inputted user credential matches any inside list of registered users
     public Boolean validateUser(User attemptedLogin){
         //checks the attempted login credentials against all registered users
-        for (User user : userList){
+        for (User user : list){
             //if there is a match, validate login
             if (attemptedLogin == user){
                 return true;
@@ -60,8 +26,9 @@ public class UserList {
         return false;
     }
 
-    public void registerUser(User register){
-        for (User user : userList){
+    //creates a new user and updates RegisteredUsers.txt
+    public void registerUser(User register) throws FileNotFoundException {
+        for (User user : list){
             //Makes sure there email
             //hopefully i did the regex correctly but i have no idea
             if (register.getEmail().isEmpty() || !register.getEmail().matches("[a-zA-Z]++[@gmail.com]")){
@@ -77,7 +44,7 @@ public class UserList {
                 return;
             }
 
-            //checks every registered user to makesure the email already isnt in use
+            //checks every registered user to make sure the email already isn't in use
             if (register.getEmail() == user.getEmail()){
                 System.out.println("There is already a user registered with that email");
 
@@ -85,6 +52,37 @@ public class UserList {
             }
         }
 
-        userList.add(register);
+        list.add(register);
+        writeToFile(new File("RegisteredUsers.txt"));
+    }
+
+    @Override
+    //creates a User object based on the RegisteredUsers.txt file
+    public User createArrayObj(String line) {
+        StringBuilder userEmail = new StringBuilder();
+        StringBuilder userPassword = new StringBuilder();
+
+        //checks to see if comma seperating the email and password was passed or not
+        Boolean passedSeperator = false;
+
+        //loops through the line character by character
+        for (int i = 0; i < line.length(); i ++){
+
+            //if not passed the separator
+            if (!passedSeperator){
+                //checks if current character is the separator
+                if (line.charAt(i) == ','){
+                    passedSeperator = true;
+                } else {    //if not the separator, adds the current chapter to the userEmail string
+                    userEmail.append(line.charAt(i));
+                }
+            } else {    //if passed the separator, add teh current character to the userPassword string
+                userPassword.append(line.charAt(i));
+            }
+        }
+
+        //creates and returns a new user
+        User user = new User(userEmail.toString(), userPassword.toString());
+        return user;
     }
 }
