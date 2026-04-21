@@ -6,18 +6,28 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class UserList extends FileLists<User> {
+public class UserList implements FileLists {
 
-    public UserList() {
-        list = new ArrayList<>();
+    public  ArrayList<User> userList;
+
+    public UserList() throws FileNotFoundException {
+        this.userList = new ArrayList<>();
+
+        getFromFile(new File("RegisteredUsers.txt"));
+
+        //this next section is purely to test getting the users from the file
+        for (User user : userList){
+            System.out.println("Email: " + user.getEmail() + ", Password: " + user.getPassword()
+            );
+        }
     }
 
     //Checks if inputted user credential matches any inside list of registered users
     public Boolean validateUser(User attemptedLogin){
         //checks the attempted login credentials against all registered users
-        for (User user : list){
+        for (User user : userList){
             //if there is a match, validate login
-            if (attemptedLogin == user){
+            if (attemptedLogin.getEmail().equals(user.getEmail()) && attemptedLogin.getPassword().equals(user.getPassword())){
                 return true;
             }
         }
@@ -28,7 +38,7 @@ public class UserList extends FileLists<User> {
 
     //creates a new user and updates RegisteredUsers.txt
     public void registerUser(User register) throws FileNotFoundException {
-        for (User user : list){
+        for (User user : userList){
             //Makes sure there email
             //hopefully i did the regex correctly but i have no idea
             if (register.getEmail().isEmpty() || !register.getEmail().matches("[a-zA-Z]++[@gmail.com]")){
@@ -52,37 +62,58 @@ public class UserList extends FileLists<User> {
             }
         }
 
-        list.add(register);
+        userList.add(register);
         writeToFile(new File("RegisteredUsers.txt"));
     }
 
     @Override
-    //creates a User object based on the RegisteredUsers.txt file
-    public User createArrayObj(String line) {
-        StringBuilder userEmail = new StringBuilder();
-        StringBuilder userPassword = new StringBuilder();
+    //Should run once at program execution
+    //retrieves info from file
+    public void getFromFile(File file) throws FileNotFoundException {
+        Scanner readFile = new Scanner(file);
 
-        //checks to see if comma seperating the email and password was passed or not
-        Boolean passedSeperator = false;
+        while (readFile.hasNext()){
+            String line = readFile.nextLine();
 
-        //loops through the line character by character
-        for (int i = 0; i < line.length(); i ++){
+            StringBuilder userEmail = new StringBuilder();
+            StringBuilder userPassword = new StringBuilder();
 
-            //if not passed the separator
-            if (!passedSeperator){
-                //checks if current character is the separator
-                if (line.charAt(i) == ','){
-                    passedSeperator = true;
-                } else {    //if not the separator, adds the current chapter to the userEmail string
-                    userEmail.append(line.charAt(i));
+            //checks to see if comma seperating the email and password was passed or not
+            Boolean passedSeperator = false;
+
+            //loops through the line character by character
+            for (int i = 0; i < line.length(); i ++){
+
+                //if not passed the separator
+                if (!passedSeperator){
+                    //checks if current character is the separator
+                    if (line.charAt(i) == ','){
+                        passedSeperator = true;
+                    } else {    //if not the separator, adds the current chapter to the userEmail string
+                        userEmail.append(line.charAt(i));
+                    }
+                } else {    //if passed the separator, add teh current character to the userPassword string
+                    userPassword.append(line.charAt(i));
                 }
-            } else {    //if passed the separator, add teh current character to the userPassword string
-                userPassword.append(line.charAt(i));
             }
+
+            //creates new user based on info from file
+            userList.add(new User(userEmail.toString(), userPassword.toString()));
         }
 
-        //creates and returns a new user
-        User user = new User(userEmail.toString(), userPassword.toString());
-        return user;
+        //gotta make sure to close the file
+        readFile.close();
+    }
+
+    @Override
+    public void writeToFile(File file) throws FileNotFoundException {
+        PrintWriter writeOutput = new PrintWriter(file);
+
+        //prints each user in the ArrayList to the file, overwriting it
+        for (User user : userList){
+            writeOutput.println(user);
+        }
+
+        writeOutput.close();
     }
 }

@@ -11,6 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+
 public class LoginScreen extends Application {
 
     public static void main(String[] args) {
@@ -18,7 +20,9 @@ public class LoginScreen extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws FileNotFoundException {
+        UserList userList = new UserList();
+
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);
@@ -34,15 +38,30 @@ public class LoginScreen extends Application {
         Label passwordLabel = new Label("Password: ");
         TextField passwordField = new TextField();
 
+        //Login Button
+        Button loginBtn = new Button("Login");
+
         gridPane.add(emailLabel, 0, 0);
         gridPane.add(emailField, 1, 0);
         gridPane.add(passwordLabel, 0, 4);
         gridPane.add(passwordField, 1, 4);
+        gridPane.add(loginBtn, 1, 6);
 
         //Can use code like this to delete items in FoodOrder from the current order
         emailLabel.setOnMouseClicked(e->{
             emailLabel.setText("Clicked!");
         });
+
+        loginBtn.setOnMouseClicked(event -> {
+            if (userList.validateUser(new User(emailField.getText().trim(), passwordField.getText().trim())) == true){
+
+                //this is a test for now
+                loginBtn.setText("Success!");
+            } else {
+                loginBtn.setText("Failed");
+            }
+        });
+
 
 
         BorderPane root = new BorderPane();
