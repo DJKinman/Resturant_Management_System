@@ -15,8 +15,7 @@ import java.io.FileNotFoundException;
 
 public class LoginScreen extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void main(String[] args) {launch(args);
     }
 
     @Override
@@ -41,11 +40,15 @@ public class LoginScreen extends Application {
         //Login Button
         Button loginBtn = new Button("Login");
 
+        //Register Button
+        Button registerBtn = new Button("Register");
+
         gridPane.add(emailLabel, 0, 0);
         gridPane.add(emailField, 1, 0);
         gridPane.add(passwordLabel, 0, 4);
         gridPane.add(passwordField, 1, 4);
         gridPane.add(loginBtn, 1, 6);
+        gridPane.add(registerBtn, 0, 6);
 
         //Can use code like this to delete items in FoodOrder from the current order
         emailLabel.setOnMouseClicked(e->{
@@ -59,6 +62,23 @@ public class LoginScreen extends Application {
                 loginBtn.setText("Success!");
             } else {
                 loginBtn.setText("Failed");
+            }
+        });
+
+        registerBtn.setOnAction(event -> {
+            if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+                //probably make a seperate label to say this idk
+                registerBtn.setText("Please input a valid username and password");
+            }
+            else {
+                User newUser = new User(emailField.getText().trim(), passwordField.getText().trim());
+                try {
+                    userList.registerUser(newUser);
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                //again probably make a new label to show results
+                registerBtn.setText("Registered Successfully");
             }
         });
 

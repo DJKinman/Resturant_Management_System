@@ -39,23 +39,22 @@ public class UserList implements FileLists {
     //creates a new user and updates RegisteredUsers.txt
     public void registerUser(User register) throws FileNotFoundException {
         for (User user : userList){
-            //Makes sure there email
-            //hopefully i did the regex correctly but i have no idea
-            if (register.getEmail().isEmpty() || !register.getEmail().matches("[a-zA-Z]++[@gmail.com]")){
-                System.out.println("Please insert a email");
+            //Makes sure there is an email and that it matches the regex pattern
+            if (register.getEmail().isEmpty() || !register.getEmail().matches("[a-zA-Z]+(@gmail.com)")){
+                System.out.println("Please submit a valid email");
 
                 return;
             }
 
             //makes sure there is a password
             if (register.getPassword().isEmpty()){
-                System.out.println("Please insert a password");
+                System.out.println("Please submit password");
 
                 return;
             }
 
             //checks every registered user to make sure the email already isn't in use
-            if (register.getEmail() == user.getEmail()){
+            if (register.getEmail().equals(user.getEmail())){
                 System.out.println("There is already a user registered with that email");
 
                 return;
@@ -66,6 +65,44 @@ public class UserList implements FileLists {
         writeToFile(new File("RegisteredUsers.txt"));
     }
 
+    public String encryptData(String line){
+        StringBuilder encryptedData = new StringBuilder();
+
+        for (int i = 0; i < line.length(); i++){
+            char letter = line.charAt(i);
+
+            if (letter >= 'A' && letter <= 'Z')
+            {
+                letter = (char) ((letter - 'A' + 5) % 26 + 'A');
+            } else if (letter >= 'a' && letter <= 'z'){
+                letter = (char) ((letter - 'A' + 5) % 26 - 'A');
+            }
+
+            encryptedData.append(letter);
+        }
+
+        return encryptedData.toString();
+    }
+
+    public String decryptData(String line){
+        StringBuilder decryptedData = new StringBuilder();
+
+        for (int i = 0; i < line.length(); i++){
+            char letter = line.charAt(i);
+
+            if (letter >= 'A' && letter <= 'Z')
+            {
+                letter = (char) ((letter - 'A' - 5) % 26 + 'A');
+            } else if (letter >= 'a' && letter <= 'z'){
+                letter = (char) ((letter - 'A' - 5) % 26 - 'A');
+            }
+
+            decryptedData.append(letter);
+        }
+
+        return decryptedData.toString();
+    }
+
     @Override
     //Should run once at program execution
     //retrieves info from file
@@ -74,6 +111,7 @@ public class UserList implements FileLists {
 
         while (readFile.hasNext()){
             String line = readFile.nextLine();
+            line = decryptData(line);
 
             StringBuilder userEmail = new StringBuilder();
             StringBuilder userPassword = new StringBuilder();
@@ -111,7 +149,8 @@ public class UserList implements FileLists {
 
         //prints each user in the ArrayList to the file, overwriting it
         for (User user : userList){
-            writeOutput.println(user);
+            String encryptedUser = encryptData(user.toString());
+            writeOutput.println(encryptedUser);
         }
 
         writeOutput.close();

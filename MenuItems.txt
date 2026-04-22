@@ -1,0 +1,23 @@
+Coco-cola, 1.00, drinks
+Sprite, 1.00, drinks
+Dr.pepper, 1.00, drinks
+Zero sugar pepsi, 1.00, drinks
+Fanta, 1.00, drinks
+Diet Coke, 1.00, drinks
+Strawberry Banana Smoothie, 5.00, drinks
+Pineappple Mango Smoothie, 5.00, drinks
+Big Mac, 7.99, general
+Quarter Pounder, 7.99, general
+Cheeseburger, 2.99, general
+Hamburger, 2.99, general
+Big Arch, 11.50, general
+Cheese loaded fries, 11.00, general
+Apple Slices, 1.30, kids
+Hamburger Happy Meal, 5.50, kids
+Chicken Nugget Happy Meal, 6.50, kids
+French fries, 4.00, kids
+Banana, 1.50, kids
+Chicken burger, 10.00, general
+Cheese dilla , 10.00, general
+Mozz sticks , 8.00, general
+chipotle flatbread, 9.00, general
