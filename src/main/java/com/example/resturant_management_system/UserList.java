@@ -27,6 +27,7 @@ public class UserList implements FileLists {
         //checks the attempted login credentials against all registered users
         for (User user : userList){
             //if there is a match, validate login
+
             if (attemptedLogin.getEmail().equals(user.getEmail()) && attemptedLogin.getPassword().equals(user.getPassword())){
                 return true;
             }
@@ -71,11 +72,8 @@ public class UserList implements FileLists {
         for (int i = 0; i < line.length(); i++){
             char letter = line.charAt(i);
 
-            if (letter >= 'A' && letter <= 'Z')
-            {
-                letter = (char) ((letter - 'A' + 5) % 26 + 'A');
-            } else if (letter >= 'a' && letter <= 'z'){
-                letter = (char) ((letter - 'A' + 5) % 26 - 'A');
+            if (letter != ',') {
+                letter = (char) (letter - 5);
             }
 
             encryptedData.append(letter);
@@ -86,15 +84,14 @@ public class UserList implements FileLists {
 
     public String decryptData(String line){
         StringBuilder decryptedData = new StringBuilder();
+        Boolean passedSeperator = false;
 
         for (int i = 0; i < line.length(); i++){
             char letter = line.charAt(i);
 
-            if (letter >= 'A' && letter <= 'Z')
-            {
-                letter = (char) ((letter - 'A' - 5) % 26 + 'A');
-            } else if (letter >= 'a' && letter <= 'z'){
-                letter = (char) ((letter - 'A' - 5) % 26 - 'A');
+            //1 becomes ',' and is not converted back needs to be fixed
+            if (letter != ',') {
+                letter = (char) (letter + 5);
             }
 
             decryptedData.append(letter);
