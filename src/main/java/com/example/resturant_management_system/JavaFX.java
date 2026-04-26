@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import java.io.FileNotFoundException;
 
 //Most likely going to change the name of this class later
 public class JavaFX extends PointOfSale {
@@ -31,8 +32,17 @@ public class JavaFX extends PointOfSale {
 
         //click the button to show how the scene changes roots
         testBtn.setOnMouseClicked(e -> {
-            BorderPane newRoot = new BorderPane();
-            scene.setRoot(newRoot);
+//            BorderPane newRoot = new BorderPane();
+//            scene.setRoot(newRoot);
+
+            //could possible use something like this to switch menu "tabs"
+            //possibly create one javaFX class that creates the objects of the PointOfSale subclasses and uses something like this to switch
+            LoginScreen loginScreen = new LoginScreen();
+            try {
+                loginScreen.start(primaryStage);
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         primaryStage.setTitle("Class is grandchild of Application test");

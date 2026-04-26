@@ -63,7 +63,7 @@ public class Menu implements FileLists{
         return kids;
     }
 
-    public static ArrayList<FoodItem> getMenu3() {
+    public static ArrayList<FoodItem> getGeneralMenu() {
         return general;
     }
 

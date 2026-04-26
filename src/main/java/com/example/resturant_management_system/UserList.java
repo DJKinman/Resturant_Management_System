@@ -16,6 +16,7 @@ public class UserList implements FileLists {
         getFromFile(new File("RegisteredUsers.txt"));
 
         //this next section is purely to test getting the users from the file
+        System.out.println("DEBUG REMOVE LATER:\n");
         for (User user : userList){
             System.out.println("Email: " + user.getEmail() + ", Password: " + user.getPassword()
             );
@@ -73,7 +74,7 @@ public class UserList implements FileLists {
             char letter = line.charAt(i);
 
             if (letter != ',') {
-                letter = (char) (letter - 5);
+                letter = (char) (letter - 15);
             }
 
             encryptedData.append(letter);
@@ -91,7 +92,7 @@ public class UserList implements FileLists {
 
             //1 becomes ',' and is not converted back needs to be fixed
             if (letter != ',') {
-                letter = (char) (letter + 5);
+                letter = (char) (letter + 15); //originally did 5 but '1' became ',' and was skipped, not '1' becomes '@'
             }
 
             decryptedData.append(letter);
