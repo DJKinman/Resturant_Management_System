@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public class Menu implements FileLists{
     private static ArrayList<FoodItem> allItems;
-    //THESE ARE TEMP NAMES!!!! REPLACE LATER!!!!!
     private static ArrayList<FoodItem> drinks;
     private static ArrayList<FoodItem> kids;
     private static ArrayList<FoodItem> general;
@@ -74,41 +73,49 @@ public class Menu implements FileLists{
         while (readFile.hasNext()){
             String line = readFile.nextLine();
 
-            StringBuilder itemName = new StringBuilder();
-            StringBuilder itemPrice = new StringBuilder();
-            StringBuilder itemMenu = new StringBuilder();
+            String[] lineParts = line.split(",");
 
-            Boolean nameSeperatorPassed = false;
-            Boolean priceSeperatorPassed = false;
+            String itemName = lineParts[0];
+            String itemPrice = lineParts[1];
+            String itemMenu = lineParts[2];
 
-            for (int i = 0; i < line.length(); i ++){
+            allItems.add(new FoodItem(itemName, Double.parseDouble(itemPrice), itemMenu));
 
-                //gets the item name from file
-                while (nameSeperatorPassed == false){
-                    if (line.charAt(i) == ','){
-                        nameSeperatorPassed = true;
-                    } else {
-                        itemName.append(line.charAt(i));
-                    }
-                }
+//            StringBuilder itemName = new StringBuilder();
+//            StringBuilder itemPrice = new StringBuilder();
+//            StringBuilder itemMenu = new StringBuilder();
+//
+//            Boolean nameSeperatorPassed = false;
+//            Boolean priceSeperatorPassed = false;
 
-                //gets the item price from file
-                while (priceSeperatorPassed == false){
-                    if (line.charAt(i) == ','){
-                        priceSeperatorPassed = true;
-                    } else {
-                        itemPrice.append(line.charAt(i));
-                    }
-                }
-
-                //gets the item menu from file
-                if (line.charAt(i) == ','){
-                    break;
-                } else {
-                    itemMenu.append(line.charAt(i));
-                }
-
-            }
+//            for (int i = 0; i < line.length(); i ++){
+//
+//                //gets the item name from file
+//                while (nameSeperatorPassed == false){
+//                    if (line.charAt(i) == ','){
+//                        nameSeperatorPassed = true;
+//                    } else {
+//                        itemName.append(line.charAt(i));
+//                    }
+//                }
+//
+//                //gets the item price from file
+//                while (priceSeperatorPassed == false){
+//                    if (line.charAt(i) == ','){
+//                        priceSeperatorPassed = true;
+//                    } else {
+//                        itemPrice.append(line.charAt(i));
+//                    }
+//                }
+//
+//                //gets the item menu from file
+//                if (line.charAt(i) == ','){
+//                    break;
+//                } else {
+//                    itemMenu.append(line.charAt(i));
+//                }
+//
+//            }
 
         }
     }

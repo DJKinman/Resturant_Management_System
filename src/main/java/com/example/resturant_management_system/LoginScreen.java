@@ -21,6 +21,7 @@ public class LoginScreen extends Application {
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
         UserList userList = new UserList();
+        Boolean userValidated = false;
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
@@ -50,6 +51,27 @@ public class LoginScreen extends Application {
         gridPane.add(loginBtn, 1, 6);
         gridPane.add(registerBtn, 0, 6);
 
+        BorderPane root = new BorderPane();
+        root.setTop(titleLabel);
+        root.setCenter(gridPane);
+        BorderPane.setAlignment(titleLabel, Pos.CENTER);
+
+        Scene scene = new Scene(root, 700, 500);
+        primaryStage.setTitle("Restaurant Login");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        //creates the objects for each tab to switch between
+        GeneralMenuTab generalMenuTab = new GeneralMenuTab(scene);
+        KidsMenuTab kidsMenuTab = new KidsMenuTab(scene);
+
+        //Debug button to skip login screen
+        Button debugBtn = new Button("DEBUG SKIP");
+        gridPane.add(debugBtn, 3, 6);
+        debugBtn.setOnMouseClicked(e-> {
+            scene.setRoot(generalMenuTab);
+        });
+
         //Can use code like this to delete items in FoodOrder from the current order
         emailLabel.setOnMouseClicked(e->{
             emailLabel.setText("Clicked!");
@@ -59,7 +81,8 @@ public class LoginScreen extends Application {
             if (userList.validateUser(new User(emailField.getText().trim(), passwordField.getText().trim())) == true){
 
                 //this is a test for now
-                loginBtn.setText("Success!");
+//                loginBtn.setText("Success!");
+                scene.setRoot(generalMenuTab);
             } else {
                 loginBtn.setText("Failed");
             }
@@ -79,19 +102,8 @@ public class LoginScreen extends Application {
                 }
                 //again probably make a new label to show results
                 registerBtn.setText("Registered Successfully");
+
             }
         });
-
-
-
-        BorderPane root = new BorderPane();
-        root.setTop(titleLabel);
-        root.setCenter(gridPane);
-        BorderPane.setAlignment(titleLabel, Pos.CENTER);
-
-        Scene scene = new Scene(root, 700, 500);
-        primaryStage.setTitle("Restaurant Login");
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 }

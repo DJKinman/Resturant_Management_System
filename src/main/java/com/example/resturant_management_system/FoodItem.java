@@ -41,8 +41,7 @@ public class FoodItem {
 
     @Override
     public String toString() {
-        String result = name + "\t\t" + price
-                + "\n" + modifications;
+        String result = name + "\t\t" + price + "\n";
 
         return result;
     }

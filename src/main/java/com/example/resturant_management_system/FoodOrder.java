@@ -7,11 +7,12 @@ public class FoodOrder {
     private  double total;
 
     FoodOrder(){
+        order = new ArrayList<>();
         total = 0.0;
     }
 
     //adds the item to the order
-    private void addFoodItem(FoodItem item){
+    public void addFoodItem(FoodItem item){
         order.add(item);
         total += item.getPrice();
     }

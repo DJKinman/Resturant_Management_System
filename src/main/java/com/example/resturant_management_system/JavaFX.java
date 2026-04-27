@@ -13,11 +13,15 @@ import java.io.FileNotFoundException;
 //Most likely going to change the name of this class later
 public class JavaFX extends PointOfSale {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+//    JavaFX(Scene mainScene) {
+//        super(mainScene);
+//    }
+//
+//    public static void main(String[] args) {
+//        launch(args);
+//    }
 
-    @Override
+    //@Override
     public void start(Stage primaryStage) {
         BorderPane root = new BorderPane();
 

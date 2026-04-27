@@ -2,12 +2,14 @@ package com.example.resturant_management_system;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 
@@ -26,11 +28,13 @@ import java.util.ArrayList;
 //    public void switchTab(Button tab);
 //}
 
-public abstract class PointOfSale extends Application {
+public abstract class PointOfSale extends BorderPane {
     static protected ArrayList<FoodItem> menuItems;  //each subclass will overwrite in a static block to get the items of the correct menu only
-    private FlowPane btnArea;   //this is where the button will appear
-    static protected StackPane currentOrderArea; //will display all current orders
-    static protected GridPane tabArea;   //holds the buttons to switch menu tabs, dont know what type of pane to use
+    protected FlowPane btnArea;   //this is where the button will appear
+    protected VBox currentOrderArea; //will display all current orders
+    protected TabPane tabArea;   //holds the buttons to switch menu tabs, dont know what type of pane to use
+    protected Scene mainScene;     //the main scene
+    public FoodOrder currentFoodOrder;    //holds the current FoodOrder object
 
     //static vars are used here because the subclasses will all share the versions from PointOfSale
     //they are constant versions
@@ -41,17 +45,31 @@ public abstract class PointOfSale extends Application {
 
         //initalizing the shared static vars
         menuItems = new ArrayList<>();
-        currentOrderArea = new StackPane();
-        tabArea = new GridPane();
+        currentOrderArea = new VBox();
+        tabArea = new TabPane();
+        tabArea.setSide(Side.BOTTOM);
 
-        btnArea = new FlowPane();
+        //creates the Current Order area
+        Label currentOrderText = new Label("Currnet Order:");
+        currentOrderArea.getChildren().add(currentOrderText);
+        //sets the currentOrdderArea to have a set width
+        currentOrderArea.setMinWidth(200);
+
+        //Debug code to show where the Current Order Area is
+        currentOrderArea.setBackground(Background.fill(Color.DARKRED));
+
+        currentFoodOrder = new FoodOrder();
+
+        //places the GUI fields into the correct areas
+        this.setLeft(currentOrderArea);
+        this.setCenter(tabArea);
 
         //places where each section will be
         //need to figure out how to limit the dimenstions of each area (btnArea will take up most of the screen)
-        BorderPane root = new BorderPane();
-        root.setLeft(currentOrderArea);
-        root.setBottom(tabArea);
-        root.setRight(btnArea);
+//        BorderPane root = new BorderPane();
+//        root.setLeft(currentOrderArea);
+//        root.setBottom(tabArea);
+//        root.setRight(btnArea);
 
         //do not include this bottom part, creates a 2nd window when application is launched
 //        Scene scene = new Scene(root, 700, 500);
@@ -60,15 +78,8 @@ public abstract class PointOfSale extends Application {
 //        primaryStage.show();
     }
 
-    @Override
-    public void start(Stage primaryStage){
-
-        //just some demo code to copy and paste
-//        BorderPane root = new BorderPane();
-//
-//        Scene scene = new Scene(root, 700, 500);
-//        primaryStage.setTitle("Restaurant System");
-//        primaryStage.setScene(scene);
-//        primaryStage.show();
+    protected void addTab(Tab tab){
+        tabArea.getTabs().add(tab);
     }
+
 }

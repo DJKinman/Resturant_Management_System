@@ -67,38 +67,24 @@ public class UserList implements FileLists {
         writeToFile(new File("RegisteredUsers.txt"));
     }
 
-    public String encryptData(String line){
-        StringBuilder encryptedData = new StringBuilder();
-
-        for (int i = 0; i < line.length(); i++){
-            char letter = line.charAt(i);
-
-            if (letter != ',') {
-                letter = (char) (letter - 15);
+    public String encryptData(String line, int key){
+        String[] splits= line.split(",");
+        String encryptedData="";
+        for (int i=0;i< splits.length;i++) {
+            if (i== splits.length-1) {
+                encryptedData += CaeserCipher.encrypt(splits[i], key);
+            } else {
+                encryptedData += CaeserCipher.encrypt(splits[i], key)+",";
             }
 
-            encryptedData.append(letter);
         }
 
-        return encryptedData.toString();
+        return encryptedData;
     }
 
     public String decryptData(String line){
-        StringBuilder decryptedData = new StringBuilder();
-        Boolean passedSeperator = false;
-
-        for (int i = 0; i < line.length(); i++){
-            char letter = line.charAt(i);
-
-            //1 becomes ',' and is not converted back needs to be fixed
-            if (letter != ',') {
-                letter = (char) (letter + 15); //originally did 5 but '1' became ',' and was skipped, not '1' becomes '@'
-            }
-
-            decryptedData.append(letter);
-        }
-
-        return decryptedData.toString();
+        int key = 15;
+        return encryptData(line, 26 - 15);
     }
 
     @Override
@@ -147,7 +133,7 @@ public class UserList implements FileLists {
 
         //prints each user in the ArrayList to the file, overwriting it
         for (User user : userList){
-            String encryptedUser = encryptData(user.toString());
+            String encryptedUser = encryptData(user.toString(), 15);
             writeOutput.println(encryptedUser);
         }
 
