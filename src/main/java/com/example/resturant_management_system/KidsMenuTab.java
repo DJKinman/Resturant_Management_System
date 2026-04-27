@@ -21,8 +21,11 @@ public class KidsMenuTab extends PointOfSale{
             Button btn = new Button(foodItem.getName());
             btnArea.getChildren().add(btn);
 
-            btn.setOnMouseClicked(e -> {
+            btn.setOnMouseClicked(e-> {
                 currentFoodOrder.addFoodItem(foodItem);
+
+                OrderArea orderArea = new OrderArea(foodItem, currentOrderArea);
+                currentOrderArea.getChildren().add(orderArea);
                 System.out.println("Current Order:\n" + currentFoodOrder);
             });
         }
@@ -31,9 +34,13 @@ public class KidsMenuTab extends PointOfSale{
         btnArea.setBackground(Background.fill(Color.AQUA));
 
         //creates the Kids Menu Tab
-        Tab kidsTab = new Tab("Kids");
+        kidsTab = new Tab("Kids");
         kidsTab.setContent(btnArea);
 
         addTab(kidsTab);
+    }
+
+    public Tab getTabArea(){
+        return kidsTab;
     }
 }

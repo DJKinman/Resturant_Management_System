@@ -23,6 +23,9 @@ public class GeneralMenuTab extends PointOfSale{
 
             btn.setOnMouseClicked(e-> {
                 currentFoodOrder.addFoodItem(foodItem);
+
+                OrderArea orderArea = new OrderArea(foodItem, currentOrderArea);
+                currentOrderArea.getChildren().add(orderArea);
                 System.out.println("Current Order:\n" + currentFoodOrder);
             });
         }
@@ -31,7 +34,7 @@ public class GeneralMenuTab extends PointOfSale{
         btnArea.setBackground(Background.fill(Color.AQUA));
 
         //creates the General Menu Tab
-        Tab generalTab = new Tab("General");
+//        Tab generalTab = new Tab("General");
         generalTab.setContent(btnArea);
 
         addTab(generalTab);

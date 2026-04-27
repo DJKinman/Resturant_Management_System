@@ -41,12 +41,12 @@ public class JavaFX extends PointOfSale {
 
             //could possible use something like this to switch menu "tabs"
             //possibly create one javaFX class that creates the objects of the PointOfSale subclasses and uses something like this to switch
-            LoginScreen loginScreen = new LoginScreen();
-            try {
-                loginScreen.start(primaryStage);
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
+//            LoginScreen loginScreen = new LoginScreen();
+//            try {
+//                loginScreen.start(primaryStage);
+//            } catch (FileNotFoundException ex) {
+//                throw new RuntimeException(ex);
+//            }
         });
 
         primaryStage.setTitle("Class is grandchild of Application test");

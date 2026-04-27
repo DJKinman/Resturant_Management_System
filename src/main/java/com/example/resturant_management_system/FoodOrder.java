@@ -17,6 +17,11 @@ public class FoodOrder {
         total += item.getPrice();
     }
 
+    public void removeFoodItem(FoodItem item){
+        order.remove(item);
+        total -= item.getPrice();
+    }
+
     //adds a modification to the last item in the order
     private void addModification(String modification){
         int lastIndex = order.size() - 1;

@@ -31,13 +31,20 @@ import java.util.ArrayList;
 public abstract class PointOfSale extends BorderPane {
     static protected ArrayList<FoodItem> menuItems;  //each subclass will overwrite in a static block to get the items of the correct menu only
     protected FlowPane btnArea;   //this is where the button will appear
-    protected VBox currentOrderArea; //will display all current orders
+    public VBox currentOrderArea; //will display all current orders
     protected TabPane tabArea;   //holds the buttons to switch menu tabs, dont know what type of pane to use
     protected Scene mainScene;     //the main scene
-    public FoodOrder currentFoodOrder;    //holds the current FoodOrder object
+    public static FoodOrder currentFoodOrder;    //holds the current FoodOrder object
+    protected Tab generalTab;
+    protected Tab kidsTab;
+    protected Tab drinksTab;
 
     //static vars are used here because the subclasses will all share the versions from PointOfSale
     //they are constant versions
+
+    static {
+        currentFoodOrder = new FoodOrder();
+    }
 
     PointOfSale(){
         //tyring this here so it is shared across all subclasses, may not work and have to delete later
@@ -49,6 +56,10 @@ public abstract class PointOfSale extends BorderPane {
         tabArea = new TabPane();
         tabArea.setSide(Side.BOTTOM);
 
+        generalTab = new Tab("General");
+        kidsTab = new Tab("Kids");
+        drinksTab = new Tab("Drinks");
+
         //creates the Current Order area
         Label currentOrderText = new Label("Currnet Order:");
         currentOrderArea.getChildren().add(currentOrderText);
@@ -57,8 +68,6 @@ public abstract class PointOfSale extends BorderPane {
 
         //Debug code to show where the Current Order Area is
         currentOrderArea.setBackground(Background.fill(Color.DARKRED));
-
-        currentFoodOrder = new FoodOrder();
 
         //places the GUI fields into the correct areas
         this.setLeft(currentOrderArea);
