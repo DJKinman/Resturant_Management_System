@@ -1,16 +1,11 @@
 package com.example.resturant_management_system;
 
-import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+
 import java.util.ArrayList;
 
 //public interface PointOfSale {
@@ -62,7 +57,28 @@ public abstract class PointOfSale extends BorderPane {
         if (currentOrderArea == null){
             currentOrderArea = new VBox();
             Label currentOrderText = new Label("Currnet Order:");
-            currentOrderArea.getChildren().add(currentOrderText);
+
+            Button completeOrderBtn = new Button("Complete");
+            completeOrderBtn.setOnMouseClicked(e-> {
+                //creates the alert that displays the receipt
+                Alert receipt = new Alert(Alert.AlertType.INFORMATION);
+                receipt.setTitle("Receipt");
+                //https://stackoverflow.com/questions/8819842/best-way-to-format-a-double-value-to-2-decimal-places
+                receipt.setHeaderText("Total: " + String.format("%.2f", currentFoodOrder.getTotal()));
+                receipt.setContentText(currentFoodOrder.toString());
+                receipt.showAndWait();
+
+                //clears the current order
+                currentFoodOrder.clearOrder();
+                //removes all items from teh currentOrderArea
+                currentOrderArea.getChildren().clear();
+
+                //readds the currentOrderText and completeOrderBtn to the cleared currentOrderArea
+                currentOrderArea.getChildren().addAll(currentOrderText, completeOrderBtn);
+
+            });
+
+            currentOrderArea.getChildren().addAll(currentOrderText, completeOrderBtn);
             //sets the currentOrdderArea to have a set width
             currentOrderArea.setMinWidth(200);
 

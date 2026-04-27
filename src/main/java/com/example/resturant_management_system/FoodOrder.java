@@ -28,6 +28,15 @@ public class FoodOrder {
         order.get(lastIndex).addModification(modification);
     }
 
+    public void clearOrder(){
+        order.clear();
+        total = 0.0;
+    }
+
+    public double getTotal(){
+        return total;
+    }
+
     //prints the receipt of the order
     @Override
     public String toString() {
