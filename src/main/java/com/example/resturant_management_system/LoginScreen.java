@@ -64,7 +64,10 @@ public class LoginScreen extends Application {
         //creates the objects for each tab to switch between
         GeneralMenuTab generalMenuTab = new GeneralMenuTab(scene);
         KidsMenuTab kidsMenuTab = new KidsMenuTab(scene);
+        DrinksMenuTab drinksMenuTab = new DrinksMenuTab(scene);
+
         generalMenuTab.addTab(kidsMenuTab.getTabArea());
+        generalMenuTab.addTab(drinksMenuTab.getTabArea());
 
         //Debug button to skip login screen
         Button debugBtn = new Button("DEBUG SKIP");
