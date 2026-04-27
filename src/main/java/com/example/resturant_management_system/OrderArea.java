@@ -1,5 +1,6 @@
 package com.example.resturant_management_system;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -10,9 +11,11 @@ public class OrderArea extends HBox{
 
     public OrderArea(FoodItem foodItem, VBox orderArea){
         this.OrderArea = orderArea;
-        Text foodName = new Text(foodItem.getName());
-        Text foodPrice = new Text(String.valueOf(foodItem.getPrice()));
+        Text foodName = new Text(foodItem.getName() + " ");
+        Text foodPrice = new Text("$" + foodItem.getPrice() + " ");
         Button removeFoodItemBtn = new Button("X");
+
+        orderArea.setSpacing(10);
 
         this.getChildren().addAll(foodName, foodPrice, removeFoodItemBtn);
 

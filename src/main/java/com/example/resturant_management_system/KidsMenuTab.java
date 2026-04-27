@@ -36,8 +36,6 @@ public class KidsMenuTab extends PointOfSale{
         //creates the Kids Menu Tab
         kidsTab = new Tab("Kids");
         kidsTab.setContent(btnArea);
-
-        addTab(kidsTab);
     }
 
     public Tab getTabArea(){

@@ -13,6 +13,8 @@ public class GeneralMenuTab extends PointOfSale{
         super();    //calls PointOfSale constructor aswell
         this.mainScene = mainScene;
 
+        this.setLeft(PointOfSale.currentOrderArea);
+
         //creates the button area
         btnArea = new FlowPane(10,10);
 

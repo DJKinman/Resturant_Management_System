@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public abstract class PointOfSale extends BorderPane {
     static protected ArrayList<FoodItem> menuItems;  //each subclass will overwrite in a static block to get the items of the correct menu only
     protected FlowPane btnArea;   //this is where the button will appear
-    public VBox currentOrderArea; //will display all current orders
+    public static VBox currentOrderArea; //will display all current orders
     protected TabPane tabArea;   //holds the buttons to switch menu tabs, dont know what type of pane to use
     protected Scene mainScene;     //the main scene
     public static FoodOrder currentFoodOrder;    //holds the current FoodOrder object
@@ -48,11 +48,9 @@ public abstract class PointOfSale extends BorderPane {
 
     PointOfSale(){
         //tyring this here so it is shared across all subclasses, may not work and have to delete later
-        Stage primaryStage = new Stage();
 
         //initalizing the shared static vars
         menuItems = new ArrayList<>();
-        currentOrderArea = new VBox();
         tabArea = new TabPane();
         tabArea.setSide(Side.BOTTOM);
 
@@ -61,17 +59,20 @@ public abstract class PointOfSale extends BorderPane {
         drinksTab = new Tab("Drinks");
 
         //creates the Current Order area
-        Label currentOrderText = new Label("Currnet Order:");
-        currentOrderArea.getChildren().add(currentOrderText);
-        //sets the currentOrdderArea to have a set width
-        currentOrderArea.setMinWidth(200);
+        if (currentOrderArea == null){
+            currentOrderArea = new VBox();
+            Label currentOrderText = new Label("Currnet Order:");
+            currentOrderArea.getChildren().add(currentOrderText);
+            //sets the currentOrdderArea to have a set width
+            currentOrderArea.setMinWidth(200);
 
-        //Debug code to show where the Current Order Area is
-        currentOrderArea.setBackground(Background.fill(Color.DARKRED));
+            //Debug code to show where the Current Order Area is
+            currentOrderArea.setBackground(Background.fill(Color.DARKRED));
+        }
 
         //places the GUI fields into the correct areas
-        this.setLeft(currentOrderArea);
         this.setCenter(tabArea);
+
 
         //places where each section will be
         //need to figure out how to limit the dimenstions of each area (btnArea will take up most of the screen)
