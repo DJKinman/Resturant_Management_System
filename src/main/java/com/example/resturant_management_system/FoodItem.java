@@ -4,41 +4,47 @@ public class FoodItem {
     private String name;
     private double price;
     private String menu;
-    private String modifications;
 
+    /**
+     * Constructor for the FoodItem class
+     * @param name the name of the FoodItem
+     * @param price the price of the FoodItem
+     * @param menu the menu the FoodItem belongs to
+     */
     FoodItem(String name, double price, String menu){
         this.name = name;
         this.price = price;
         this.menu = menu;
     }
 
-    //adds a modification to the item
-    public void addModification(String modification){
-        //appends the modification to the order with a tab in front of it to denote that it is not a new order
-        modifications += "\t" + modification + "\n";
-    }
-
-    //returns the name of the item
+    /**
+     * Returns the name of the item
+     * @return name the name of the FoodItem
+     */
     public String getName(){
         return name;
     }
 
-    //returns the price of the item
+    /**
+     * Returns the price of the item
+     * @return price the price of the FoodItem
+     */
     public double getPrice(){
         return price;
     }
 
-    //returns what menu the FoodItem belongs to
+    /**
+     * Returns what menu the FoodItem belongs to
+     * @return menu what menu the FoodItem belongs to
+     */
     public String getMenu(){
         return menu;
     }
 
-    //returns the modifications of the item
-    //mainly for the recipet
-    public String getModifications(){
-        return modifications;
-    }
-
+    /**
+     * How the FoodItem will be printed
+     * @return how the FoodItem will be printed
+     */
     @Override
     public String toString() {
         String result = name + "\t\t$" + price + "\n";

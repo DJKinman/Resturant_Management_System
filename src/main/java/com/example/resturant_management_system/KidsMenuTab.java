@@ -16,16 +16,19 @@ public class KidsMenuTab extends PointOfSale{
         //creates the button area
         btnArea = new FlowPane(10, 10);
 
-        //createws the buttons for and adds them to the button area
+        //creates the buttons for and adds them to the button area
         for (FoodItem foodItem : Menu.getKidsMenu()) {
             Button btn = new Button(foodItem.getName());
             btnArea.getChildren().add(btn);
 
+            //when the button is pressed, it adds the related FoodItem to the currentFoodOrder and creaets a new OrderArea
+            //to be placed inside the currentOrderArea
             btn.setOnMouseClicked(e-> {
                 currentFoodOrder.addFoodItem(foodItem);
 
                 OrderArea orderArea = new OrderArea(foodItem, currentOrderArea);
                 currentOrderArea.getChildren().add(orderArea);
+                //prints the full current order to the console, mainly for debug purposes
                 System.out.println("Current Order:\n" + currentFoodOrder);
             });
         }
@@ -38,6 +41,11 @@ public class KidsMenuTab extends PointOfSale{
         kidsTab.setContent(btnArea);
     }
 
+    /**
+     * Returns the tab area to be displayed
+     * @return kidsTab the tab for the Kids menu
+     */
+    @Override
     public Tab getTabArea(){
         return kidsTab;
     }

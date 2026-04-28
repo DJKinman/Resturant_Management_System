@@ -6,38 +6,52 @@ public class FoodOrder {
     private ArrayList<FoodItem> order;
     private  double total;
 
+    /**
+     * Constructor for the FoodOrder class
+     */
     FoodOrder(){
         order = new ArrayList<>();
         total = 0.0;
     }
 
-    //adds the item to the order
+    /**
+     * Adds the item to the order
+     * @param item the FoodItem to be added to the order
+     */
     public void addFoodItem(FoodItem item){
         order.add(item);
         total += item.getPrice();
     }
 
+    /**
+     * Removes an item from the order
+     * @param item the FoodItem to remove from the order
+     */
     public void removeFoodItem(FoodItem item){
         order.remove(item);
         total -= item.getPrice();
     }
 
-    //adds a modification to the last item in the order
-    private void addModification(String modification){
-        int lastIndex = order.size() - 1;
-        order.get(lastIndex).addModification(modification);
-    }
-
+    /**
+     * Clears the order of all items and resets the price
+     */
     public void clearOrder(){
         order.clear();
         total = 0.0;
     }
 
+    /**
+     * Returns the total of the order
+     * @return total the total of the order
+     */
     public double getTotal(){
         return total;
     }
 
-    //prints the receipt of the order
+    /**
+     * Prints the receipt of the order
+     * @return the text of the entire order
+     */
     @Override
     public String toString() {
         String result = "";

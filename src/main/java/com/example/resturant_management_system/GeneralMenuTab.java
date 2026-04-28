@@ -18,16 +18,19 @@ public class GeneralMenuTab extends PointOfSale{
         //creates the button area
         btnArea = new FlowPane(10,10);
 
-        //createws the buttons for and adds them to the button area
+        //creates the buttons for and adds them to the button area
         for (FoodItem foodItem : Menu.getGeneralMenu()){
             Button btn = new Button(foodItem.getName());
             btnArea.getChildren().add(btn);
 
+            //when the button is pressed, it adds the related FoodItem to the currentFoodOrder and creaets a new OrderArea
+            //to be placed inside the currentOrderArea
             btn.setOnMouseClicked(e-> {
                 currentFoodOrder.addFoodItem(foodItem);
 
                 OrderArea orderArea = new OrderArea(foodItem, currentOrderArea);
                 currentOrderArea.getChildren().add(orderArea);
+                //prints the full current order to the console, mainly for debug purposes
                 System.out.println("Current Order:\n" + currentFoodOrder);
             });
         }
@@ -36,9 +39,17 @@ public class GeneralMenuTab extends PointOfSale{
         btnArea.setBackground(Background.fill(Color.AQUA));
 
         //creates the General Menu Tab
-//        Tab generalTab = new Tab("General");
         generalTab.setContent(btnArea);
 
         addTab(generalTab);
+    }
+
+    /**
+     * Returns the tab area to be displayed
+     * @return generalTab the tab for the General menu
+     */
+    @Override
+    public Tab getTabArea(){
+        return generalTab;
     }
 }

@@ -10,9 +10,14 @@ public class UserList implements FileLists {
 
     public  ArrayList<User> userList;
 
+    /**
+     * Constructor the for UserList class
+     * @throws FileNotFoundException when the file that hodls the registered users is not found
+     */
     public UserList() throws FileNotFoundException {
         this.userList = new ArrayList<>();
 
+        //gets all the users from the RegisteredUsers.txt file
         getFromFile(new File("RegisteredUsers.txt"));
 
         //this next section is purely to test getting the users from the file
@@ -23,12 +28,16 @@ public class UserList implements FileLists {
         }
     }
 
-    //Checks if inputted user credential matches any inside list of registered users
+    /**
+     * Checks if inputted user credential matches any inside list of registered users
+     * @param attemptedLogin the user credintails the user is trying to login with
+     * @return if successfuly logged in or not
+     */
     public Boolean validateUser(User attemptedLogin){
         //checks the attempted login credentials against all registered users
         for (User user : userList){
-            //if there is a match, validate login
 
+            //if there is a match, validate login
             if (attemptedLogin.getEmail().equals(user.getEmail()) && attemptedLogin.getPassword().equals(user.getPassword())){
                 return true;
             }
@@ -38,35 +47,44 @@ public class UserList implements FileLists {
         return false;
     }
 
-    //creates a new user and updates RegisteredUsers.txt
-    public void registerUser(User register) throws FileNotFoundException {
+    /**
+     * creates a new user and updates RegisteredUsers.txt
+     * @param register the new user to register
+     * @return integer value that works as a error code
+     * @throws FileNotFoundException when the file that hodls all the registered users is not found
+     */
+    public int registerUser(User register) throws FileNotFoundException {
+        //returned integer will be used as a sort of error code
+
         for (User user : userList){
             //Makes sure there is an email and that it matches the regex pattern
             if (register.getEmail().isEmpty() || !register.getEmail().matches("[a-zA-Z]+(@gmail.com)")){
                 System.out.println("Please submit a valid email");
 
-                return;
-            }
-
-            //makes sure there is a password
-            if (register.getPassword().isEmpty()){
-                System.out.println("Please submit password");
-
-                return;
+                return 1;
             }
 
             //checks every registered user to make sure the email already isn't in use
             if (register.getEmail().equals(user.getEmail())){
                 System.out.println("There is already a user registered with that email");
 
-                return;
+                return 2;
             }
         }
 
+        //if no error is found with the registered credentials, adds to the userList ArrayList and updates teh RegisteredUsers.txt file
         userList.add(register);
         writeToFile(new File("RegisteredUsers.txt"));
+
+        return 0;
     }
 
+    /**
+     * Encrypts the users in userList before writing to file
+     * @param line the line that holds the user information to encrypt
+     * @param key how far each letter is to be shifted
+     * @return the encrypted user data
+     */
     public String encryptData(String line, int key){
         String[] splits= line.split(",");
         String encryptedData="";
@@ -82,14 +100,24 @@ public class UserList implements FileLists {
         return encryptedData;
     }
 
+    /**
+     * Decrypts each user from the file
+     * @param line the line that holds the encrypted user data
+     * @return the decrypted user data
+     */
     public String decryptData(String line){
         int key = 15;
+        //key of 15 was choosen arbitrarily
+
         return encryptData(line, 26 - 15);
     }
 
+    /**
+     * Gets all the uesrs from the RegisteredUsers.txt file
+     * @param file the file that holds all the registered users
+     * @throws FileNotFoundException when the file that holds all the registered users is not found
+     */
     @Override
-    //Should run once at program execution
-    //retrieves info from file
     public void getFromFile(File file) throws FileNotFoundException {
         Scanner readFile = new Scanner(file);
 
@@ -127,6 +155,11 @@ public class UserList implements FileLists {
         readFile.close();
     }
 
+    /**
+     * Writes all the uesrs to the RegisteredUsers.txt file
+     * @param file the file that holds all the registered users
+     * @throws FileNotFoundException when the file that holds all the registered users is not found
+     */
     @Override
     public void writeToFile(File file) throws FileNotFoundException {
         PrintWriter writeOutput = new PrintWriter(file);

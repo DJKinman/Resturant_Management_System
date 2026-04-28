@@ -12,10 +12,10 @@ public class Menu implements FileLists{
     private static ArrayList<FoodItem> kids;
     private static ArrayList<FoodItem> general;
 
+    //static blocks are called when the class file is first loaded into memory
     static{
+        //initalizes theArrayLists
         allItems = new ArrayList<>();
-
-        //AGAIN THESE ARE TEMP NAME!!! REMEMBER TO REPLACE!!!
         drinks = new ArrayList<>();
         kids = new ArrayList<>();
         general = new ArrayList<>();
@@ -24,24 +24,24 @@ public class Menu implements FileLists{
         //https://stackoverflow.com/questions/2042813/calling-non-static-method-in-static-method-in-java
         Menu menu = new Menu();
 
+        //gets the menu items from the file
         try {
             menu.getFromFile(new File("MenuItems.txt"));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
+        //separates all the menu items into their proper menus
         menu.seperateMenus();
-
-
     }
-
 
     public Menu() {
 
     }
 
-    //checks what menu each FoodItem belongs to and sorts it into the corrent menu
-    //IMPORTNAT!!!! YET AGAIN THESE ARE TEMPORARY NAMES!!!! REPLACE LATER!!!! DO NOT FORGET!!!!!
+    /**
+     * Separates all the FoodItems into the correct menus
+     */
     public void seperateMenus(){
         for (FoodItem item: allItems){
             if (item.getMenu().equals("drinks")){
@@ -54,18 +54,35 @@ public class Menu implements FileLists{
         }
     }
 
+    /**
+     * Returns the Drinks menu
+     * @return  drinksMenu  the Drinks menu
+     */
     public static ArrayList<FoodItem> getDrinksMenu() {
         return drinks;
     }
 
+    /**
+     * Returns the Kids menu
+     * @return  kidsMenu  the kids menu
+     */
     public static ArrayList<FoodItem> getKidsMenu() {
         return kids;
     }
 
+    /**
+     * Returns the General menu
+     * @return  generalMenu  the General menu
+     */
     public static ArrayList<FoodItem> getGeneralMenu() {
         return general;
     }
 
+    /**
+     * Gets all the menu items from the MenuItems.txt file
+     * @param file the file that holds all the menu items
+     * @throws FileNotFoundException when the file that holds all the menu items is not found
+     */
     @Override
     public void getFromFile(File file) throws FileNotFoundException {
         Scanner readFile = new Scanner(file);
@@ -73,6 +90,7 @@ public class Menu implements FileLists{
         while (readFile.hasNext()){
             String line = readFile.nextLine();
 
+            //splits each line into diffrent parts, thanks Yash for telling us about this
             String[] lineParts = line.split(",");
 
             String itemName = lineParts[0];
@@ -81,47 +99,17 @@ public class Menu implements FileLists{
 
             allItems.add(new FoodItem(itemName, Double.parseDouble(itemPrice), itemMenu));
 
-//            StringBuilder itemName = new StringBuilder();
-//            StringBuilder itemPrice = new StringBuilder();
-//            StringBuilder itemMenu = new StringBuilder();
-//
-//            Boolean nameSeperatorPassed = false;
-//            Boolean priceSeperatorPassed = false;
-
-//            for (int i = 0; i < line.length(); i ++){
-//
-//                //gets the item name from file
-//                while (nameSeperatorPassed == false){
-//                    if (line.charAt(i) == ','){
-//                        nameSeperatorPassed = true;
-//                    } else {
-//                        itemName.append(line.charAt(i));
-//                    }
-//                }
-//
-//                //gets the item price from file
-//                while (priceSeperatorPassed == false){
-//                    if (line.charAt(i) == ','){
-//                        priceSeperatorPassed = true;
-//                    } else {
-//                        itemPrice.append(line.charAt(i));
-//                    }
-//                }
-//
-//                //gets the item menu from file
-//                if (line.charAt(i) == ','){
-//                    break;
-//                } else {
-//                    itemMenu.append(line.charAt(i));
-//                }
-//
-//            }
-
         }
     }
 
+    /**
+     * Writes all the menu items to the MenuItems.txt file
+     * @param file the file that holds all the menu items
+     * @throws FileNotFoundException when the file that hodls all the menu items is not found
+     */
     @Override
     public void writeToFile(File file) throws FileNotFoundException {
+        //this method should not run inside Menu.java because the user should not have a way to edit the menu from inside the program
         PrintWriter writeOutput = new PrintWriter(file);
 
         //prints each FoodItem in the ArrayList to the file, overwriting it
