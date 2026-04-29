@@ -15,7 +15,6 @@ public class CaeserCipher {
 
             encryptedText.append(c);
         }
-
         return encryptedText.toString();
     }
 

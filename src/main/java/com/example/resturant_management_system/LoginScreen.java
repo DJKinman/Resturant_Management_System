@@ -34,16 +34,20 @@ public class LoginScreen extends Application {
         //Email UI section
         Label emailLabel = new Label("Login: ");
         TextField emailField = new TextField();
+        emailLabel.setStyle("-fx-text-fill: blue;");
 
         //Password UI section
         Label passwordLabel = new Label("Password: ");
         TextField passwordField = new TextField();
+        passwordLabel.setStyle("-fx-text-fill: blue;");
 
         //Login Button
         Button loginBtn = new Button("Login");
+        loginBtn.setStyle("-fx-background-color: brown; -fx-text-fill: white;");
 
         //Register Button
         Button registerBtn = new Button("Register");
+        registerBtn.setStyle("-fx-background-color: brown; -fx-text-fill: white;");
 
         //adds all the elements to the GridPane
         gridPane.add(emailLabel, 0, 0);
@@ -93,7 +97,9 @@ public class LoginScreen extends Application {
 
         //logic for when the register new user button is pressed
         registerBtn.setOnAction(event -> {
-            if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+            // Just copied and pasted the above code of validating user and changed it to false instead of true
+            // I know its long so it looks a bit too much. (idk how to fix that)
+            if (emailField.getText().isEmpty() || passwordField.getText().isEmpty() || userList.validateUser(new User(emailField.getText().trim(), passwordField.getText().trim())) == false ) {
                 //probably make a seperate label to say this idk
                 registerBtn.setText("Invalid");
                 System.out.println("Please enter a email and password");

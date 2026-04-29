@@ -5,7 +5,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
+
+//public interface PointOfSale {
+//    //gets the scene of the class to display instead
+//    //https://stackoverflow.com/questions/77643917/switching-scenes-in-javafx-using-a-button
+//    public void getScene();
+//
+//    //will place all the buttons into a pane that will be overlayed in the FoodItems area
+//    public void displayTabItems();
+//
+//    //will basically just be a HBox that holds all the tab buttons
+//    public void displayTabs();
+//
+//    //used to switch to a new tab of items
+//    public void switchTab(Button tab);
+//}
 
 public abstract class PointOfSale extends BorderPane {
     static protected ArrayList<FoodItem> menuItems;  //each subclass will overwrite in a static block to get the items of the correct menu only
@@ -18,7 +34,7 @@ public abstract class PointOfSale extends BorderPane {
     protected Tab kidsTab;
     protected Tab drinksTab;
 
-    //static vars are used here because the subclasses/children will all share the versions from PointOfSale
+    //static vars are used here because the subclasses will all share the versions from PointOfSale
     //they are constant versions
 
     static {
@@ -33,18 +49,15 @@ public abstract class PointOfSale extends BorderPane {
         tabArea = new TabPane();
         tabArea.setSide(Side.BOTTOM);
 
-        //creates the tabs to switch between
         generalTab = new Tab("General");
         kidsTab = new Tab("Kids");
         drinksTab = new Tab("Drinks");
 
         //creates the Current Order area
-        //IntelliJ was saying currentOrderArea may be null so I added this
         if (currentOrderArea == null){
             currentOrderArea = new VBox();
-            Label currentOrderLabel = new Label("Currnet Order:");
+            Label currentOrderText = new Label("Currnet Order:");
 
-            //button that completes the transaction and clears all related fields
             Button completeOrderBtn = new Button("Complete");
             completeOrderBtn.setOnMouseClicked(e-> {
                 //creates the alert that displays the receipt
@@ -61,31 +74,39 @@ public abstract class PointOfSale extends BorderPane {
                 currentOrderArea.getChildren().clear();
 
                 //readds the currentOrderText and completeOrderBtn to the cleared currentOrderArea
-                currentOrderArea.getChildren().addAll(currentOrderLabel, completeOrderBtn);
+                currentOrderArea.getChildren().addAll(currentOrderText, completeOrderBtn);
 
             });
 
-            //adds the label and button to complete the current order
-            currentOrderArea.getChildren().addAll(currentOrderLabel, completeOrderBtn);
+            currentOrderArea.getChildren().addAll(currentOrderText, completeOrderBtn);
             //sets the currentOrdderArea to have a set width
             currentOrderArea.setMinWidth(200);
 
-            //Changes the colour of the currentOrderArea to differentiate it
+            //Debug code to show where the Current Order Area is
             currentOrderArea.setBackground(Background.fill(Color.DARKRED));
         }
 
         //places the GUI fields into the correct areas
         this.setCenter(tabArea);
+
+
+        //places where each section will be
+        //need to figure out how to limit the dimenstions of each area (btnArea will take up most of the screen)
+//        BorderPane root = new BorderPane();
+//        root.setLeft(currentOrderArea);
+//        root.setBottom(tabArea);
+//        root.setRight(btnArea);
+
+        //do not include this bottom part, creates a 2nd window when application is launched
+//        Scene scene = new Scene(root, 700, 500);
+//        primaryStage.setTitle("Restaurant System");
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
     }
 
-    /**
-     * Returns the tab of the object called
-     * @param tab   the tab the subclass of PointOfSale has created to be displayed
-     */
     protected void addTab(Tab tab){
         tabArea.getTabs().add(tab);
     }
 
     public abstract Tab getTabArea();
-
 }
