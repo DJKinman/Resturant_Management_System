@@ -18,16 +18,27 @@ David Kinman, Khushi Amipara, Keerthana Kotha, Kendall Clark
 The project was based off a point-of-sale system that would be used in a restaurant
 
 ***PointOfSale*** - The base abstract class of the program.
+
 ***LoginScreen*** - The starting point of the program, its purpose is login and register new users. Apon valid login attempt, the user is brought to MainMenuScreen, which acts as the main menu
+
 ***PointOfSale*** - The core abstract class of the program. Most of the other screens inherit from it. It owns shared UI features like the current food area and current food order as static members.
+
 ***MainMenuScreen*** - Extends PointOfSale and acts as the landing page. It lets the user eithe view and edits all past orders, or create a new order
-***ViewAllOrdersMenu** - Extends PointOfSale and allows the user to view, edit, or delete a previous order
+
+***ViewAllOrdersMenu*** - Extends PointOfSale and allows the user to view, edit, or delete a previous order
+
 ***GeneralMenuTab***, ***KidsMenuTab***, ***DrinksMenuTab*** - All extend PointOfSale. They display buttons to add items to the current order of a specific tab.
+
 ***OrderArea*** - self-contained UI element that holds a specific FoodItem added to the current order to be displayed along with a delete button
+
 ***User*** - Holds the information for each individual user object
+
 ***UserList*** - Class that handles all user related activities like logging in, registering a new user, and validating user
+
 ***FoodItem*** - Holds the information for each Food Item object
+
 ***FoodOrder*** Tracks the items in the current order, and methods to add, remove, and to sort the orders. It also 
+
 ***CeasarCipher*** provides methods to encrypt and decrypt user credentials
 
 ## Use of Inheritance, polymorphism, abstract classes, interface, and static members
