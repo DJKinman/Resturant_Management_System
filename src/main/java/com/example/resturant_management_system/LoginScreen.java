@@ -97,10 +97,6 @@ public class LoginScreen extends Application {
                 //probably make a seperate label to say this idk
                 registerBtn.setText("Invalid");
                 System.out.println("Please enter a email and password");
-            } else if(userList.validateUser(new User(emailField.getText().trim(), passwordField.getText().trim())) == false ){
-                //probably make a seperate label to say this idk
-                registerBtn.setText("Invalid");
-                System.out.println("Please enter a email and password");
             } else{
                 //creates a new user based on the information inputted
                 User newUser = new User(emailField.getText().trim(), passwordField.getText().trim());
@@ -110,6 +106,8 @@ public class LoginScreen extends Application {
 
                     if (registerUserErrorCode == 0){
                         //code 0 means everything went as expected
+                        //lets the user know they successfully registered
+                        registerBtn.setText("Success");
                         return;
                     } else if(registerUserErrorCode == 1){
                         //code 1 means an invalid email was inputted
@@ -124,8 +122,6 @@ public class LoginScreen extends Application {
                     //happens if unable to find the file with the registered users
                     throw new RuntimeException(e);
                 }
-                //lets the user know they successfully registered
-                registerBtn.setText("Success");
 
             }
         });

@@ -37,7 +37,7 @@ public class UserList implements FileLists {
         for (User user : userList){
 
             //if there is a match, validate login
-            if (attemptedLogin.getEmail().equalsIgnoreCase(user.getEmail()) && attemptedLogin.getPassword().equals(user.getPassword())){
+            if (attemptedLogin.getEmail().equals(user.getEmail()) && attemptedLogin.getPassword().equals(user.getPassword())){
                 return true;
             }
         }
@@ -64,7 +64,7 @@ public class UserList implements FileLists {
             }
 
             //checks every registered user to make sure the email already isn't in use
-            if (register.getEmail().equalsIgnoreCase(user.getEmail())){
+            if (register.getEmail().equals(user.getEmail())){
                 System.out.println("There is already a user registered with that email");
 
                 return 2;
