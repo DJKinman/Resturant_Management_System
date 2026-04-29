@@ -44,12 +44,28 @@ public class ViewAllOrdersMenu extends PointOfSale{
             //creates the fields to add for each order
             Text orderID = new Text("Order ID: " + order.getId());
             Text orderTotal = new Text("Total: $" + String.format("%.2f",order.getTotal()));
+            Button editBtn = new Button("Edit");
             Button removeOrderBtn = new Button("X");
 
             //adds the fields to the gridpane
             gridPane.add(orderID, 1, row);
             gridPane.add(orderTotal, 2, row);
-            gridPane.add(removeOrderBtn, 3, row);
+            gridPane.add(editBtn, 3, row);
+            gridPane.add(removeOrderBtn, 4, row);
+
+            //allow the user to edit a previous order
+            editBtn.setOnMouseClicked(e->{
+                PointOfSale.currentFoodOrder = order;
+                FoodOrder.allOrders.remove(order);
+
+                //for every item in the order being edited, it gets added to the orderArea
+                for (FoodItem foodItem : currentFoodOrder.getOrder()){
+                    OrderArea orderArea = new OrderArea(foodItem, currentOrderArea);
+                    currentOrderArea.getChildren().add(orderArea);
+                }
+
+                mainScene.setRoot(MainMenuScreen.generalMenuTab);
+            });
 
             //removes the selected order from the file
             removeOrderBtn.setOnMouseClicked(e->{

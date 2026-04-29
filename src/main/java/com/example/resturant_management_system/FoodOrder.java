@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class FoodOrder implements FileLists{
@@ -118,6 +117,23 @@ public class FoodOrder implements FileLists{
     }
 
     /**
+     * Sorts allOrders with bubble sort
+     */
+    private void sortOrders(){
+        for (int i = 0; i < allOrders.size() - 1; i++){
+
+            for (int j = 0; j < allOrders.size() - 1 - i; j++){
+
+                if (allOrders.get(j).getId() > allOrders.get(j + 1).getId()){
+                    FoodOrder temp = allOrders.get(j);
+                    allOrders.set(j, allOrders.get(j + 1));
+                    allOrders.set(j + 1, temp);
+                }
+            }
+        }
+    }
+
+    /**
      * Prints the receipt of the order
      * @return the text of the entire order
      */
@@ -167,6 +183,9 @@ public class FoodOrder implements FileLists{
 
     @Override
     public void writeToFile(File file) throws FileNotFoundException {
+        //makes sure orders in allOrders is sorted first
+        sortOrders();
+
         PrintWriter writeOutput = new PrintWriter(file);
 
         //prints each user in the ArrayList to the file, overwriting it

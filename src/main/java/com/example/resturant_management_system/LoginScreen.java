@@ -73,12 +73,12 @@ public class LoginScreen extends Application {
 
         mainMenuScreen = new MainMenuScreen(scene);
 
-        //Debug button to skip login screen credentials
-        Button debugBtn = new Button("DEBUG SKIP");
-        gridPane.add(debugBtn, 3, 6);
-        debugBtn.setOnMouseClicked(e-> {
-            scene.setRoot(mainMenuScreen);
-        });
+//        //Debug button to skip login screen credentials
+//        Button debugBtn = new Button("DEBUG SKIP");
+//        gridPane.add(debugBtn, 3, 6);
+//        debugBtn.setOnMouseClicked(e-> {
+//            scene.setRoot(mainMenuScreen);
+//        });
 
         //if login is successful changes the root to GeneralMenuTab
         loginBtn.setOnMouseClicked(event -> {

@@ -6,6 +6,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 
 public class MainMenuScreen extends PointOfSale{
+    public static GeneralMenuTab generalMenuTab; //static so it can be accessed from other classes
+
     /**
      * Constructor for the MainMenuScreen class
      * @param mainScene the scene that is displayed
@@ -18,7 +20,7 @@ public class MainMenuScreen extends PointOfSale{
         HBox BtnArea = new HBox();
 
         //creates the objects for each tab to switch between
-        GeneralMenuTab generalMenuTab = new GeneralMenuTab(mainScene);
+        generalMenuTab = new GeneralMenuTab(mainScene);
         KidsMenuTab kidsMenuTab = new KidsMenuTab(mainScene);
         DrinksMenuTab drinksMenuTab = new DrinksMenuTab(mainScene);
 

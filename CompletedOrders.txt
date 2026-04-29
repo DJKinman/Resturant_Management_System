@@ -1,2 +1,3 @@
-1,31.0,Cheese loaded fries,Chicken burger,Cheese dilla
-2,15.98,Quarter Pounder,Big Mac
+1,29.0,Cheese loaded fries,Cheese dilla,Mozz sticks
+2,64.48,Big Mac,Cheese loaded fries,Chicken Nugget Happy Meal,Coco-cola,Coco-cola,Cheese loaded fries,chipotle flatbread,chipotle flatbread,Big Mac
+2,32.0,Cheese loaded fries,Cheese loaded fries,Chicken burger

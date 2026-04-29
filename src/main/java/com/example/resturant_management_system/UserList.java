@@ -20,12 +20,11 @@ public class UserList implements FileLists {
         //gets all the users from the RegisteredUsers.txt file
         getFromFile(new File("RegisteredUsers.txt"));
 
-        //this next section is purely to test getting the users from the file
-        System.out.println("DEBUG REMOVE LATER:\n");
-        for (User user : userList){
-            System.out.println("Email: " + user.getEmail() + ", Password: " + user.getPassword()
-            );
-        }
+//        //this next section is purely to test getting the users from the file
+//        System.out.println("DEBUG REMOVE LATER:\n");
+//        for (User user : userList){
+//            System.out.println("Email: " + user.getEmail() + ", Password: " + user.getPassword());
+//        }
     }
 
     /**
@@ -38,7 +37,7 @@ public class UserList implements FileLists {
         for (User user : userList){
 
             //if there is a match, validate login
-            if (attemptedLogin.getEmail().equals(user.getEmail()) && attemptedLogin.getPassword().equals(user.getPassword())){
+            if (attemptedLogin.getEmail().equalsIgnoreCase(user.getEmail()) && attemptedLogin.getPassword().equals(user.getPassword())){
                 return true;
             }
         }
@@ -65,7 +64,7 @@ public class UserList implements FileLists {
             }
 
             //checks every registered user to make sure the email already isn't in use
-            if (register.getEmail().equals(user.getEmail())){
+            if (register.getEmail().equalsIgnoreCase(user.getEmail())){
                 System.out.println("There is already a user registered with that email");
 
                 return 2;
