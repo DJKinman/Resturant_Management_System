@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 
 public class LoginScreen extends Application {
 
+    static MainMenuScreen mainMenuScreen;
+
     public static void main(String[] args) {launch(args);
     }
 
@@ -69,27 +71,19 @@ public class LoginScreen extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        //creates the objects for each tab to switch between
-        GeneralMenuTab generalMenuTab = new GeneralMenuTab(scene);
-        KidsMenuTab kidsMenuTab = new KidsMenuTab(scene);
-        DrinksMenuTab drinksMenuTab = new DrinksMenuTab(scene);
-
-        //adds the other tabs to the GeneralMenuTab so that they can be switched between
-        //(GeneralMenuTab is the first to appear after the login so it is treated like the base)
-        generalMenuTab.addTab(kidsMenuTab.getTabArea());
-        generalMenuTab.addTab(drinksMenuTab.getTabArea());
+        mainMenuScreen = new MainMenuScreen(scene);
 
         //Debug button to skip login screen credentials
         Button debugBtn = new Button("DEBUG SKIP");
         gridPane.add(debugBtn, 3, 6);
         debugBtn.setOnMouseClicked(e-> {
-            scene.setRoot(generalMenuTab);
+            scene.setRoot(mainMenuScreen);
         });
 
         //if login is successful changes the root to GeneralMenuTab
         loginBtn.setOnMouseClicked(event -> {
             if (userList.validateUser(new User(emailField.getText().trim(), passwordField.getText().trim())) == true){
-                scene.setRoot(generalMenuTab);
+                scene.setRoot(mainMenuScreen);
             } else {
                 loginBtn.setText("Failed");
             }
@@ -99,12 +93,15 @@ public class LoginScreen extends Application {
         registerBtn.setOnAction(event -> {
             // Just copied and pasted the above code of validating user and changed it to false instead of true
             // I know its long so it looks a bit too much. (idk how to fix that)
-            if (emailField.getText().isEmpty() || passwordField.getText().isEmpty() || userList.validateUser(new User(emailField.getText().trim(), passwordField.getText().trim())) == false ) {
+            if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()){
                 //probably make a seperate label to say this idk
                 registerBtn.setText("Invalid");
                 System.out.println("Please enter a email and password");
-            }
-            else {
+            } else if(userList.validateUser(new User(emailField.getText().trim(), passwordField.getText().trim())) == false ){
+                //probably make a seperate label to say this idk
+                registerBtn.setText("Invalid");
+                System.out.println("Please enter a email and password");
+            } else{
                 //creates a new user based on the information inputted
                 User newUser = new User(emailField.getText().trim(), passwordField.getText().trim());
                 try {

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu implements FileLists{
-    private static ArrayList<FoodItem> allItems;
+    public static ArrayList<FoodItem> allItems;
     private static ArrayList<FoodItem> drinks;
     private static ArrayList<FoodItem> kids;
     private static ArrayList<FoodItem> general;
